@@ -20,6 +20,9 @@ model = neighbors.KNeighborsClassifier(n_neighbors=1, p = 2) # K = 1, p = 2 <-->
 model.fit(X_train, y_train)
 y_pred = model.predict(X_test)
 print('Accuracy of 1KNN: %.2f %%' %(100* accuracy_score(y_test,y_pred)))
+print("Print results for 20 test data points:")
+print("Predicted labels: ", y_pred[20:40])
+print("Ground truth    : ", y_test[20:40])
 
 # TH2 K=7
 model = neighbors.KNeighborsClassifier(n_neighbors=7, p = 2) 
@@ -59,3 +62,4 @@ model = neighbors.KNeighborsClassifier(n_neighbors=7, p = 2, weights=myWeight)
 model.fit(X_train, y_train)
 y_pred = model.predict(X_test)
 print('Accuracy of 7KNN(custom weights): %.2f %%' %(100* accuracy_score(y_test,y_pred)))
+
