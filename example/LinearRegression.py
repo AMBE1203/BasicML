@@ -12,6 +12,7 @@ y = np.array([ 49, 50, 51,  54, 58, 59, 60, 62, 63, 64, 66, 67, 68])
 # Building Xbar
 one = np.ones((X.shape[0],1))
 Xbar = np.concatenate((one,X),axis = 1) # each point is one row
+print(Xbar)
 # Calculating weight of the fitting
 A = np.dot(Xbar.T,Xbar)
 b = np.dot(Xbar.T,y)
