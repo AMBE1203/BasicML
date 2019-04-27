@@ -2,7 +2,6 @@ from __future__ import print_function
 import numpy as np
 from sklearn.linear_model import LinearRegression
 import matplotlib
-
 import matplotlib.pyplot as plt
 
 
@@ -29,7 +28,7 @@ print('Solution x1 = %f, cost = %f, after %d iteration' %(x1[-1], cost(x1[-1]),i
 X = np.random.rand(1000, 1)
 y = 4 + 3*X + .5*np.random.randn(1000) # noise added
 model = LinearRegression()
-model.fit(X.reshape(-1,1), y.reshape(-1,1))
+model.fit(X.reshape(-1,1), y)
 w, b = model.coef_[0][0], model.intercept_[0]
 sol_sklearn = np.array([b,w])
 print('Solution found by sklearn: ',sol_sklearn)
