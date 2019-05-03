@@ -145,6 +145,9 @@ def GD_momentum2(w_init, grad, eta, gamma):
         v.append(v_new)
     return (w, it)
 
+w_init = np.array([[2], [1]])
+(w1 , it1) = GD_momentum2( w_init, grad1, .1, .9)
+print('Sol found by GD_Momentum: w = ', w1[-1].T, '\nafter %d iterations.' %(it1+1))
 '''
 Gradient Descent với NAG 
 '''
@@ -174,3 +177,7 @@ def GD_NAG2(w_init, grad, eta, gamma):
         w.append(w_new)
         v.append(v_new)
     return (w, it)
+
+w_init = np.array([[2], [1]])
+(w1 , it1) = GD_momentum2( w_init, grad1, .1, .9)
+print('Sol found by GD_NAG: w = ', w1[-1].T, '\nafter %d iterations.' %(it1+1))
