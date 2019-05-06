@@ -12,6 +12,7 @@ y = np.array([0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1])
 
 # extended data 
 X = np.concatenate((np.ones((1, X.shape[1])), X), axis = 0)
+print(X)
 
 def sigmoid(s):
     return 1/(1 + np.exp(-s))
@@ -27,7 +28,7 @@ def logistic_sigmoid_regression(X, y, w_init, eta, nepoches = 10000): #eta == le
         #mix data
         mix_id = np.random.permutation(N)
         for i in mix_id:
-            xi = X[:, i].reshape(d, 1)
+            xi = X[:, i].reshape(d, 1)  # X[:, i] lấy về cột thứ i (nhưng kết quả trả về là 1 ma trận hàng có shape (1, d) nên phải reshape về cột) 
             yi = y[i]
             zi = sigmoid(np.dot(w[-1].T, xi))
             w_new = w[-1] + eta*(yi - zi)*xi
@@ -65,7 +66,7 @@ xx = np.linspace(0, 6, 1000) # lấy 1000 điểm nằm trong khoảng [0, 6]
 w0 = w[-1][0][0]
 w1 = w[-1][1][0]
 
-threshold = -w0/w1
+threshold = -w0/w1 # ngưỡng quyết định đỗ trượt
 yy = sigmoid(w0 + w1*xx)
 plt.axis([-2, 8, -1, 2])
 plt.plot(xx, yy, 'g-', linewidth = 2)
@@ -115,9 +116,10 @@ X = np.array([[0.50, 0.75, 1.00, 1.25, 1.50, 1.75, 1.75, 2.00, 2.25, 2.50,
 2.75, 3.00, 3.25, 3.50, 4.00, 4.25, 4.50, 4.75, 5.00, 5.50]]).T
 y = np.array([0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1])
 N = X.shape[0]
+
 # bias trick
 Xbar = np.concatenate((X, np.ones((N, 1))), axis = 1)
-print(Xbar)
+print(Xbar.shape)
 
 w_init = np.random.randn(Xbar.shape[1])
 lam = 0.0001
