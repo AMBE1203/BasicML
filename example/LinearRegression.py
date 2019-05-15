@@ -25,12 +25,12 @@ x0 = np.linspace(145, 185, 2)
 y0= w_0 + w_1*x0
 
 # Drawing the fitting line 
-''' plt.plot(X.T, y.T, 'ro')     # data 
+plt.plot(X, y, 'ro')     # data 
 plt.plot(x0, y0)               # the fitting line
 plt.axis([140, 190, 45, 75])
 plt.xlabel('Height (cm)')
 plt.ylabel('Weight (kg)')
-plt.show() '''
+plt.show() 
 
 y1 = w_1*155 + w_0
 y2 = w_1*160 + w_0
