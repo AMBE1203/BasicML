@@ -23,5 +23,3 @@ print("Accuracy %.2f %%" %(100 *accuracy_score(y_test, y_pred.tolist())))
 '''
 Softmax with mini-batch gradient descent
 '''
-
-def 
