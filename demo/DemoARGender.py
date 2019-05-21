@@ -3,6 +3,7 @@ import numpy as np
 from sklearn import linear_model # for logistic regression
 from sklearn.metrics import accuracy_score # for evaluation
 from scipy import misc # for loading image
+import matplotlib.pyplot as plt
 np.random.seed(12)
 
 # phân chia các trainning set và test set, lựa chọn các view
@@ -85,3 +86,63 @@ logreg = linear_model.LogisticRegression(C = 1e5)
 logreg.fit(X_train, y_train)
 y_pred = logreg.predict(X_test)
 print("Accuracy: %.2f %%" %(100*accuracy_score(y_test, y_pred)))
+
+def feature_extraction_fn(fn):
+    im = vectorize_img(fn)
+    im1 = np.dot(im, ProjectionMatrix)
+    return feature_extraction(im1)
+
+fn1 = path + 'M-036-18.bmp'
+fn2 = path + 'W-045-01.bmp'
+fn3 = path + 'M-048-01.bmp'
+fn4 = path + 'W-027-02.bmp'
+
+x1 = feature_extraction_fn(fn1)
+p1 = logreg.predict_proba(x1)
+print(p1)
+
+x2 = feature_extraction_fn(fn2)
+p2 = logreg.predict_proba(x2)
+print(p2)
+
+x3 = feature_extraction_fn(fn3)
+p3 = logreg.predict_proba(x3)
+print(p3)
+
+x4 = feature_extraction_fn(fn4)
+p4 = logreg.predict_proba(x4)
+print(p4)
+
+def display_result(fn):
+    x1 = feature_extraction_fn(fn)
+    p1 = logreg.predict_proba(x1)
+    print(logreg.predict_proba(x1))
+    rgb = misc.imread(fn)
+    
+    
+    fig = plt.figure()
+#     gs = gridspec.GridSpec(1, 2, width_ratios=[3, 1]) 
+#     plt.subplot(1, 2, 1)
+    plt.figure(facecolor="white")
+    plt.subplot(121)
+    plt.axis('off')
+    plt.imshow(rgb)
+#     plt.axis('off')
+#     plt.show()
+    plt.subplot(122)
+    plt.barh([0, 1], p1[0], align='center', alpha=0.9)
+    plt.yticks([0, 1], ('man', 'woman'))
+    plt.xlim([0,1])
+    plt.show()
+    
+    
+   
+    # load an img 
+fn1 = path + 'M-036-18.bmp'
+fn2 = path + 'W-045-01.bmp'
+fn3 = path + 'M-048-01.bmp'
+fn4 = path + 'W-027-02.bmp'
+display_result(fn1)
+display_result(fn2)
+display_result(fn3)
+display_result(fn4)
