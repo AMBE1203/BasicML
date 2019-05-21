@@ -126,4 +126,3 @@ lam = 0.0001
 w, loss_hist = logistic_regression_with_decay(w_init, Xbar, y, lam, eta = 0.05, nepoches = 500)
 print('Solution of Logistic Regression: ',w)
 print('Final loss: ',loss(w, Xbar, y, lam))
-
