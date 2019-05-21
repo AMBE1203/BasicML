@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 np.random.seed(12)
 
 # phân chia các trainning set và test set, lựa chọn các view
-path = '../data/facedata/'
+path = './data/cropped_faces/'
 train_ids = np.arange(1, 26)
 test_ids = np.arange(26, 50)
 view_ids = np.hstack((np.arange(1, 8), np.arange(14, 21)))
@@ -30,7 +30,7 @@ def build_list_fn(pre, img_ids, view_ids):
     list_fn = []
     for im_id in img_ids:
         for v_id in view_ids:
-            fn = path + pre + str(im_id).zfill(3) + '-' + \
+            fn = path + pre + str(im_id).zfill(2) + '-' + \
                 str(v_id).zfill(2) + '.bmp'
             list_fn.append(fn)
     return list_fn
@@ -57,8 +57,8 @@ def build_data_matrix(img_ids, view_ids):
     X_full = np.zeros((total_imgs, D))
     y = np.hstack((np.zeros((total_imgs//2, )), np.ones((total_imgs//2, ))))
 
-    list_fn_m = build_list_fn('M-', img_ids, view_ids)
-    list_fn_w = build_list_fn('W-', img_ids, view_ids)
+    list_fn_m = build_list_fn('m-', img_ids, view_ids)
+    list_fn_w = build_list_fn('w-', img_ids, view_ids)
     list_fn = list_fn_m + list_fn_w
     
     for i in range(len(list_fn)):
