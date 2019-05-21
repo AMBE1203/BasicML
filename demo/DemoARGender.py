@@ -8,11 +8,11 @@ np.random.seed(12)
 
 # phân chia các trainning set và test set, lựa chọn các view
 path = './data/cropped_faces/'
-train_ids = np.arange(1, 26)
-test_ids = np.arange(26, 50)
-view_ids = np.hstack((np.arange(1, 8), np.arange(14, 21)))
+train_ids = np.arange(1, 4)
+test_ids = np.arange(4, 7)
+view_ids = np.arange(1, 15)
 
-D = 165 * 120 # original dimension
+D = 120 * 165 # original dimension
 d = 500 # new dimension
 
 ProjectionMatrix = np.random.randn(D, d) 
@@ -87,15 +87,18 @@ logreg.fit(X_train, y_train)
 y_pred = logreg.predict(X_test)
 print("Accuracy: %.2f %%" %(100*accuracy_score(y_test, y_pred)))
 
+
+# sử dụng hàm predict_proba() để dự đoán giới tính của 1 ảnh bất kỳ
+
 def feature_extraction_fn(fn):
     im = vectorize_img(fn)
     im1 = np.dot(im, ProjectionMatrix)
     return feature_extraction(im1)
 
-fn1 = path + 'M-036-18.bmp'
-fn2 = path + 'W-045-01.bmp'
-fn3 = path + 'M-048-01.bmp'
-fn4 = path + 'W-027-02.bmp'
+fn1 = path + 'm-07-10.bmp'
+fn2 = path + 'w-06-01.bmp'
+fn3 = path + 'm-05-14.bmp'
+fn4 = path + 'w-07-02.bmp'
 
 x1 = feature_extraction_fn(fn1)
 p1 = logreg.predict_proba(x1)
@@ -113,6 +116,8 @@ x4 = feature_extraction_fn(fn4)
 p4 = logreg.predict_proba(x4)
 print(p4)
 
+
+# hiển thị lên màn hình
 def display_result(fn):
     x1 = feature_extraction_fn(fn)
     p1 = logreg.predict_proba(x1)
@@ -138,10 +143,11 @@ def display_result(fn):
     
    
     # load an img 
-fn1 = path + 'M-036-18.bmp'
-fn2 = path + 'W-045-01.bmp'
-fn3 = path + 'M-048-01.bmp'
-fn4 = path + 'W-027-02.bmp'
+fn1 = path + 'm-07-10.bmp'
+fn2 = path + 'w-05-01.bmp'
+fn3 = path + 'm-05-14.bmp'
+fn4 = path + 'w-07-02.bmp'
+
 display_result(fn1)
 display_result(fn2)
 display_result(fn3)
