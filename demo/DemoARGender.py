@@ -143,7 +143,7 @@ def display_result(fn):
     
    
     # load an img 
-fn1 = path + 'm-07-10.bmp'
+fn1 = path + '0000.jpg'
 fn2 = path + 'w-05-01.bmp'
 fn3 = path + 'm-05-14.bmp'
 fn4 = path + 'w-07-02.bmp'
