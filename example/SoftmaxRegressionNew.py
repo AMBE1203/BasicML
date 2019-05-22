@@ -41,6 +41,8 @@ def numerical_grad(X, Y, W, loss):
             g[i,j] = (loss(X, Y, W_p) - loss(X, Y, W_n))/(2*eps)
     return g
 
+# soft max with mini batch stochastic gradient descent    
+
 def softmax_fit(X, y, W, eta = 0.01, nepoches = 100, tol = 1e-5, batch_size = 10):
     W_old = W.copy()
     ep = 0
