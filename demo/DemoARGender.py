@@ -7,10 +7,11 @@ import matplotlib.pyplot as plt
 np.random.seed(12)
 
 # phân chia các trainning set và test set, lựa chọn các view
-path = './data/cropped_faces/'
-train_ids = np.arange(1, 4)
-test_ids = np.arange(4, 7)
-view_ids = np.arange(1, 15)
+path = './data/genderface/'
+train_ids = np.arange(1, 9)
+
+test_ids = np.arange(9, 16)
+view_ids = np.arange(1, 16)
 
 D = 120 * 165 # original dimension
 d = 500 # new dimension
@@ -95,10 +96,10 @@ def feature_extraction_fn(fn):
     im1 = np.dot(im, ProjectionMatrix)
     return feature_extraction(im1)
 
-fn1 = path + 'm-07-10.bmp'
-fn2 = path + 'w-06-01.bmp'
-fn3 = path + 'm-05-14.bmp'
-fn4 = path + 'w-07-02.bmp'
+fn1 = path + 'atien.jpg'
+fn2 = path + 'w-10-02.bmp'
+fn3 = path + 'm-15-14.bmp'
+fn4 = path + 'w-13-02.bmp'
 
 x1 = feature_extraction_fn(fn1)
 p1 = logreg.predict_proba(x1)
@@ -143,10 +144,10 @@ def display_result(fn):
     
    
     # load an img 
-fn1 = path + '0000.jpg'
-fn2 = path + 'w-05-01.bmp'
-fn3 = path + 'm-05-14.bmp'
-fn4 = path + 'w-07-02.bmp'
+fn1 = path + 'atien.jpg'
+fn2 = path + 'w-10-02.bmp'
+fn3 = path + 'm-15-14.bmp'
+fn4 = path + 'w-13-02.bmp'
 
 display_result(fn1)
 display_result(fn2)

@@ -11,6 +11,7 @@ N = 100 # number of points per class
 
 X = np.zeros((N*C, d0)) #data matrix ( each row == single example)
 y = np.zeros(N*C, dtype='uint8') # class labels
+print(y)
 
 for j in range(C):
     ix = range(N*j,N*(j+1))
@@ -51,6 +52,7 @@ def crossentropy_loss(Yhat, y):
     to the corresponding index only.
     '''
     id0 = range(Yhat.shape[0])
+    print(id0)
     return -np.mean(np.log(Yhat[id0, y]))
 
 
