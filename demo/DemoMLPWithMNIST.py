@@ -58,10 +58,12 @@ def mlp_fit(X, y, W1, b1, W2, b2, eta):
     while ep < nEpoch:
         ep += 1
         mix_ids = np.random.permutation(N)
+       
         for i in range(nBatch):
             # lấy dữ liệu cho batch thứ i
             batch_ids = mix_ids[batch_size*i:min(batch_size*(i+1), N)]
             Xbatch, ybatch = X[batch_ids], y[batch_ids]
+
 
             # feed forward
             Z1 = Xbatch.dot(W1) + b1
@@ -69,16 +71,10 @@ def mlp_fit(X, y, W1, b1, W2, b2, eta):
             Z2 = A1.dot(W2) + b2
             Yhat = softmax_stable(Z2)
 
-
-            if ep % 5 ==0:
-                loss = crossentropy_loss(Yhat, ybatch)
-                print("ep %d, loss: %f" %(ep, loss))
-                loss_hist.append(loss)
-
-                # backpropagation
+            # backpropagation
             id0 = range(Yhat.shape[0])
             Yhat[id0, ybatch] -= 1
-            E2 = Yhat / nBatch
+            E2 = Yhat / batch_size # bỏ chia trung bình thì accuracy = 100%, thêm vào thì giảm xuống
             dW2 = np.dot(A1.T, E2)
             db2 = np.sum(E2, axis = 0)
 
@@ -92,6 +88,7 @@ def mlp_fit(X, y, W1, b1, W2, b2, eta):
             b1 += - eta*db1
             W2 += -eta*dW2
             b2 += -eta*db2  
+        
 
     return (W1, b1, W2, b2, loss_hist)
 
@@ -105,8 +102,11 @@ eta = 0.001
 (W1, b1, W2, b2) = mlp_init(d0, d1, d2)
 (W1, b1, W2, b2, loss_hist) = mlp_fit(X, y, W1, b1, W2, b2, eta)
 y_pred = mlp_predict(X, W1, b1, W2, b2)
+print(y_pred)
+print(y)
 acc = 100*np.mean(y_pred == y)
 print('training accuracy: %.2f %%' %acc)
+
 
 
 
