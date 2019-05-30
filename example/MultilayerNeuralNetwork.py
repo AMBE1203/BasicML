@@ -65,6 +65,7 @@ def mlp_init(d0, d1, d2):
     b1 = np.zeros(d1)
     W2 = 0.01*np.random.randn(d1, d2)
     b2 = np.zeros(d2)
+
     return (W1, b1, W2, b2)
 
 def mlp_predict(X, W1, b1, W2, b2):
