@@ -5,9 +5,9 @@ from sklearn.metrics.pairwise import cosine_similarity
 from scipy import sparse
 
 class CF(object):
-    def __init__(self, Y_data, k, dist_func = cosine_similarity, uucF = 1):
-        self.uuCF = uucF # user-user (1) or item-item (0) CF
-        self.Y_data = Y_data if uucF else Y_data[:, [1, 0, 2]] # đối với item-item đổi vị trí của 2 cột đầu tiên là thành ma trận chuyển vị (item rate user)
+    def __init__(self, Y_data, k, dist_func = cosine_similarity, uuCF = 1):
+        self.uuCF = uuCF # user-user (1) or item-item (0) CF
+        self.Y_data = Y_data if uuCF else Y_data[:, [1, 0, 2]] # đối với item-item đổi vị trí của 2 cột đầu tiên là thành ma trận chuyển vị (item rate user)
         self.k = k # number of neighbor points
         self.dist_func = dist_func
         self.Ybar_data = None
@@ -138,17 +138,66 @@ class CF(object):
                 print('Recommend item ', u, 'to user(s)', recommended_items)
 
 """
-demo with uucf
+demo with my db
 """
 # data file
 r_cols = ['user_id', 'item_id', 'rating']
-ratings = pd.read_csv('../ex.dat', sep = ' ', names=r_cols, encoding='latin-1')
+ratings = pd.read_csv('./data/ex.dat', sep = ' ', names=r_cols, encoding='latin-1')
 Y_data = ratings.values
 
+# with uuCF
 rs = CF(Y_data, k = 2, uuCF = 1)
 rs.fit()
-
 rs.print_recommendation()
+
+# with iiCF
+rs = CF(Y_data, k = 2, uuCF = 0)
+rs.fit()
+rs.print_recommendation()
+
+"""
+demo with my movieLens
+"""
+        
+r_cols = ['user_id', 'movie_id', 'rating', 'unix_timestamp']
+ratings_base = pd.read_csv('./data/ml-100k/ub.base', sep='\t', names=r_cols, encoding='latin-1')
+ratings_test = pd.read_csv('./data/ml-100k/ub.test', sep='\t', names=r_cols, encoding='latin-1')
+
+rate_train = ratings_base.values
+rate_test = ratings_test.values
+
+# indices start from 0
+rate_train[:, :2] -= 1
+rate_test[: , :2] -= 1
+
+#Kết quả với User-user CF:
+
+rs = CF(rate_train, k = 30, uuCF = 1)
+rs.fit()
+
+n_tests = rate_test.shape[0]
+SE = 0 # squared error
+for n in range(n_tests):
+    pred = rs.pred(rate_test[n, 0], rate_test[n, 1], normalized = 0)
+    SE += (pred - rate_test[n, 2])**2
+
+RMSE = np.sqrt(SE/n_tests)
+
+print('uuCF, RSME = ', RMSE)
+
+# Kết quả với Item-item CF:
+rs = CF(rate_train, k = 30, uuCF = 0)
+rs.fit()
+
+n_tests = rate_test.shape[0]
+SE = 0 # squared error
+for n in range(n_tests):
+    pred = rs.pred(rate_test[n, 0], rate_test[n, 1], normalized = 0)
+    SE += (pred - rate_test[n, 2])**2
+
+RMSE = np.sqrt(SE/n_tests)
+
+print('iiCF, RSME = ', RMSE)
         
 
 
