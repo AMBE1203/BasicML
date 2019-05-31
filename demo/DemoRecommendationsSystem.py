@@ -77,7 +77,7 @@ for n in range(n_users):
 Yhat = tfidf.dot(W) + b   
 
 # example with user_id = 10
-n = 10
+n = 100
 np.set_printoptions(precision=2) # 2 digits after . 
 ids, scores = get_items_rated_by_user(rate_test, n)
 Yhat[n, ids]
