@@ -7,10 +7,10 @@ from scipy import sparse
 class CF(object):
     def __init__(self, Y_data, k, dist_func = cosine_similarity, uuCF = 1):
         self.uuCF = uuCF # user-user (1) or item-item (0) CF
-        self.Y_data = Y_data if uuCF else Y_data[:, [1, 0, 2]] # đối với item-item đổi vị trí của 2 cột đầu tiên là thành ma trận chuyển vị (item rate user)
+        self.Y_data = Y_data if uuCF else Y_data[:, [1, 0, 2]] # đối với item-item đổi vị trí của 2 cột đầu tiên là thành ma trận chuyển vị [item rate user]
         self.k = k # number of neighbor points
-        self.dist_func = dist_func
-        self.Ybar_data = None
+        self.dist_func = dist_func # similarity function, default: cosine_similarity
+        self.Ybar_data = None # normalize data
         # number of users and items. Remember to add 1 since id starts from 0
         self.n_users = int(np.max(self.Y_data[:, 0])) + 1
         self.n_items = int(np.max(self.Y_data[:, 1])) + 1
@@ -86,11 +86,10 @@ class CF(object):
 
         # step 1: find all users who rated i
         ids = np.where(self.Y_data[:, 1] == i)[0].astype(np.int32)
-        # step 2
         users_rated_i = (self.Y_data[ids, 0]).astype(np.int32)
-        # step 3: find similarity btw the current user and others who already rated i
+        # step 2: find similarity btw the current user and others who already rated i
         sim = self.S[u, users_rated_i]
-        # step 4: find the k most similarity users
+        # step 3: find the k most similarity users
         a = np.argsort(sim)[-self.k:]
         # and the corresponding similarity levels
         nearest_s = sim[a]
