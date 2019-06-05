@@ -29,6 +29,10 @@ m, n = 10, 20
 A = np.random.rand(m,n)
 X = np.random.rand(n,m)
 
+
+
+
+
 def fn1(X):
     return np.trace(A.dot(X))
 
@@ -37,16 +41,8 @@ def gr1(X):
 
 check_grad(fn1,gr1,X)
 
-A = np.random.rand(m,m)
-x = np.random.rand(m,1)
-
-def fn2(x):
-    return x.T.dot(A).dot(x)
-
-def gr2(x):
-    return (A + A.T).dot(x)
-
-check_grad(fn2,gr2,x)
+A = np.random.rand(m, m)
+x = np.random.rand(m, 1)
 
 
 

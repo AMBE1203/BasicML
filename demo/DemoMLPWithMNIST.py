@@ -24,6 +24,7 @@ def softmax_stable(Z):
 
 def crossentropy_loss(Yhat, y):
     id0 = range(Yhat.shape[0])
+    print(id0)
     return -np.mean(np.log(Yhat[id0, y]))
 
 
@@ -57,7 +58,7 @@ def mlp_fit(X, y, W1, b1, W2, b2, eta):
 
     while ep < nEpoch:
         ep += 1
-        mix_ids = np.random.permutation(N)
+        mix_ids = np.random.permutation(N) # xáo trộn dữ liệu
        
         for i in range(nBatch):
             # lấy dữ liệu cho batch thứ i
@@ -74,7 +75,7 @@ def mlp_fit(X, y, W1, b1, W2, b2, eta):
             # backpropagation
             id0 = range(Yhat.shape[0])
             Yhat[id0, ybatch] -= 1
-            E2 = Yhat / batch_size # bỏ chia trung bình thì accuracy = 100%, thêm vào thì giảm xuống
+            E2 = Yhat / batch_size # bỏ chia trung bình thì accuracy = 100% (overfitting), thêm vào thì giảm xuống
             dW2 = np.dot(A1.T, E2)
             db2 = np.sum(E2, axis = 0)
 
@@ -94,7 +95,7 @@ def mlp_fit(X, y, W1, b1, W2, b2, eta):
 
 
 d0 = X.shape[1] # số chiều của dữ liệu
-d1 = 500
+d1 = 500 # số unit
 d2 = 10 # số class
 
 eta = 0.001
