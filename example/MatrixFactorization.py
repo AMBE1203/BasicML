@@ -107,11 +107,12 @@ class MF(object):
             bias = self.mu[i]
 
         pred = self.X[i, :].dot(self.W[:, u]) + bias
-        if pred <0:
-            return 0
-        if pred > 5:
-            return 5
-        return pred
+#        if pred <0:
+#            return 0
+#        if pred > 5:
+#            return 5
+#        return pred
+        return max(0, min(5, pred))
 
     # predict ratings one user give all unrated items
     def pred_for_user(self, user_id):
