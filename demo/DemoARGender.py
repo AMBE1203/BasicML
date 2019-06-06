@@ -70,6 +70,9 @@ def build_data_matrix(img_ids, view_ids):
     return (X, y)
 
 (X_train_full, y_train) = build_data_matrix(train_ids, view_ids)
+
+print(y_train)
+
 x_mean = X_train_full.mean(axis = 0)
 x_var  = X_train_full.var(axis = 0)
 
