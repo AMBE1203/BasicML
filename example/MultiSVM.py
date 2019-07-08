@@ -1,6 +1,7 @@
 from __future__ import print_function
 import numpy as np
 from cs231n.data_utils import load_CIFAR10
+import matplotlib.pyplot as plt
 
 cifar10_dir = './data/cifar-10-batches-py/'
 
@@ -158,3 +159,10 @@ for lr in lrs:
 
 acc = evaluate(best_W, X_test, y_test)
 print('Accuracy on test data = %2f %%' %acc)
+
+# A useful debugging strategy is to plot the loss as a function of
+# iteration number:
+plt.plot(loss_history)
+plt.xlabel('Iteration number')
+plt.ylabel('Loss value')
+plt.show()
